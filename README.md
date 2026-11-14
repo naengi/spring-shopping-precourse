@@ -3,22 +3,22 @@
 ## 구현할 기능 목록
 
 ### 1. 상품 (Product)
-- [ ] 상품 생성 `POST /api/products`
-- [ ] 상품 단건 조회 `GET /api/products/{productId}`
-- [ ] 상품 목록 조회 `GET /api/products`
-- [ ] 상품 수정 `PUT /api/products/{productId}`
-- [ ] 상품 삭제 `DELETE /api/products/{productId}`
-- [ ] 존재하지 않는 상품을 조회·수정·삭제하면 404 응답
+- [x] 상품 생성 `POST /api/products`
+- [x] 상품 단건 조회 `GET /api/products/{productId}`
+- [x] 상품 목록 조회 `GET /api/products`
+- [x] 상품 수정 `PUT /api/products/{productId}`
+- [x] 상품 삭제 `DELETE /api/products/{productId}`
+- [x] 존재하지 않는 상품을 조회·수정·삭제하면 404 응답
 
 ### 2. 상품 유효성 검사
 상품 추가·수정 시 아래를 검사하고, 잘못되면 400 응답과 오류 메시지를 반환한다.
-- [ ] 이름이 비어 있으면 예외
-- [ ] 이름이 공백 포함 15자를 넘으면 예외
-- [ ] 이름에 허용되지 않은 특수 문자가 있으면 예외
+- [x] 이름이 비어 있으면 예외
+- [x] 이름이 공백 포함 15자를 넘으면 예외
+- [x] 이름에 허용되지 않은 특수 문자가 있으면 예외
   - 허용: `( ) [ ] + - & / _`
-- [ ] 이름에 비속어가 있으면 예외 (PurgoMalum API로 검사)
-- [ ] 가격이 0보다 이하면 예외
-- [ ] 이미지 URL이 비어 있으면 예외
+- [x] 이름에 비속어가 있으면 예외 (PurgoMalum API로 검사)
+- [x] 가격이 0 이하면 예외
+- [x] 이미지 URL이 비어 있으면 예외
 
 ### 3. 회원 (Member)
 - [ ] 회원 가입 `POST /api/members/register` → 토큰 발급
@@ -67,7 +67,7 @@ Controller → Service → Repository → DB
     └── common    (공통 예외 처리)
 
 ### 유효성 검사는 도메인 객체가 직접 한다
-- 상품 이름을 `ProductPrice` 같은 값 객체로 감싸고, 생성자에서 길이·특수 문자 규칙을 검사한다.
+- 상품 이름을 `ProductName` 같은 값 객체로 감싸고, 생성자에서 길이·특수 문자 규칙을 검사한다.
 - 이렇게 하면 검사 규칙이 한곳에 모이고, 스프링 없이 단위 테스트를 할 수 있다.
 - 비속어 검사는 외부 API를 호출해야 하므로 `ProfanityChecker` 인터페이스로 분리한다.
   - 실제 구현: PurgoMalum API 호출
@@ -133,3 +133,5 @@ Controller → Service → Repository → DB
 | 비속어 검사 인터페이스 | 외부 API를 바로 호출하지 않고 인터페이스로 나누는 이유를 질문하고, BadWordChecker 예시로 `interface` 문법 설명을 요청 | 예시를 보고 ProfanityChecker를 직접 작성. 처음에 Class로 만든 것을 `interface`로 직접 고침 | 인터페이스는 "할 일 약속"이고, 실제 구현을 진짜/가짜로 바꿔 끼울 수 있어서 테스트가 인터넷에 의존하지 않게 된다는 것을 배움 |
 | PurgoMalum API 호출 | RealBadWordChecker 예시로 `implements`, `@Override`, `@Component`, `RestClient` 설명을 요청 | 예시를 보고 PurgoMalumProfanityChecker를 직접 작성하고, 브라우저로 API 응답(`true`/`false`)을 직접 확인 | `RestClient`로 외부 API를 부르는 흐름(get → uri → retrieve → body)과, `{text}` 자리 표시로 주소를 안전하게 만드는 방법을 배움 |
 | Service에 비속어 검사 연결 | ProductService 수정 정답과 바뀐 부분 설명을 요청하고, 비속어가 통과된 원인을 질문 | 정답을 보고 생성자 주입과 검사 메서드를 직접 반영. 테스트 단어가 PurgoMalum 목록에 없어서 통과된 것을 브라우저로 확인하고 단어를 바꿔 다시 테스트 | 생성자에 인터페이스 타입으로 받으면 Spring이 구현체를 자동으로 넣어 준다는 것, 외부 API 결과는 직접 확인해 봐야 한다는 것을 배움 |
+| 공통 예외 처리 (NotFoundException, GlobalExceptionHandler) | NoMemoException·ErrorDesk 예시로 `extends`, `super()`, `record`, `@RestControllerAdvice`, `@ExceptionHandler` 설명을 요청. 뼈대만 받아 채우는 방식은 어려워서 예시를 보고 고치는 방식으로 진행 | 예시를 보고 두 파일을 직접 작성하고, 리뷰받은 부분(`RuntimeException` 오타, 영수증 대신 오류를 담은 `body`, 400 메서드의 매개변수 타입)을 직접 수정. ProductService의 없음 오류 세 곳을 직접 교체 | 오류 종류를 나눠야 상태 코드를 다르게 줄 수 있다는 것, `super(message)`로 넘긴 문장을 `getMessage()`로 꺼낸다는 것, 오류를 한 곳에서 모아 처리하면 컨트롤러가 깔끔해진다는 것을 배움 |
+| 4단계 API 동작 확인 | 서버 재시작부터 `.http` 1~17번 예상 상태 코드까지 순서대로 안내를 요청 | 직접 실행해 500이던 요청이 404·400으로 바뀐 것을 확인 | 삭제한 상품을 수정하면 값 검사보다 "없음"이 먼저 걸려 404가 나온다는 것처럼, 검사 순서에 따라 응답이 달라진다는 것을 배움 (+15번은 주의)|

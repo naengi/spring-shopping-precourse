@@ -3,6 +3,7 @@ package shopping.product;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shopping.common.NotFoundException;
 import shopping.product.dto.ProductRequest;
 import shopping.product.dto.ProductResponse;
 
@@ -27,7 +28,7 @@ public class ProductService {
 
     public ProductResponse findById(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 상품입니다."));
         return ProductResponse.from(product);
     }
 
@@ -35,7 +36,7 @@ public class ProductService {
     public ProductResponse update(Long id, ProductRequest request) {
         checkProfanity(request.name());
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 상품입니다."));
         product.update(request.name(), request.price(), request.imageUrl());
         return ProductResponse.from(product);
     }
@@ -43,7 +44,7 @@ public class ProductService {
     @Transactional
     public void delete(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 상품입니다."));
         productRepository.delete(product);
     }
 
