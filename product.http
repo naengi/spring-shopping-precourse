@@ -73,6 +73,8 @@ Content-Type: application/json
 
 {
   "name": "마이너스 커피",
+  "price": -100,
+  "imageUrl": "https://example.com/coffee.jpg"
 }
 
 ### 13. 이미지 URL 빈 값으로 등록 (실패해야 함)
@@ -101,5 +103,25 @@ Content-Type: application/json
 {
   "name": "따뜻한 라떼",
   "price": 0,
+  "imageUrl": "https://example.com/latte.jpg"
+}
+
+### 16. 비속어 이름으로 등록 (실패해야 함)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "fuck coffee",
+  "price": 4500,
+  "imageUrl": "https://example.com/coffee.jpg"
+}
+
+### 17. 비속어 이름으로 수정 (실패해야 함)
+PUT http://localhost:8080/api/products/1
+Content-Type: application/json
+
+{
+  "name": "fuck latte",
+  "price": 5000,
   "imageUrl": "https://example.com/latte.jpg"
 }
