@@ -17,6 +17,7 @@ import shopping.product.dto.ProductResponse;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
+
     private final ProductService productService;
 
     public ProductController(ProductService productService) {
@@ -29,22 +30,22 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> findById(@PathVariable Long id) {
-        ProductResponse response = productService.findById(id);
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponse> findById(@PathVariable Long productId) {
+        ProductResponse response = productService.findById(productId);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> update(@PathVariable Long id,
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductResponse> update(@PathVariable Long productId,
                                                   @RequestBody ProductRequest request) {
-        ProductResponse response = productService.update(id, request);
+        ProductResponse response = productService.update(productId, request);
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        productService.delete(id);
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> delete(@PathVariable Long productId) {
+        productService.delete(productId);
         return ResponseEntity.noContent().build();
     }
 

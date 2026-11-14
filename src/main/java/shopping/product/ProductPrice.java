@@ -11,7 +11,7 @@ public class ProductPrice {
 
     private void check(int value) {
         if (value <= 0) {
-            throw new IllegalArgumentException("가격은 0보다 커야합니다.");
+            throw new IllegalArgumentException("가격은 0보다 커야 합니다.");
         }
     }
 

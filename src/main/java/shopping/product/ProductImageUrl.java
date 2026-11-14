@@ -11,7 +11,7 @@ public class ProductImageUrl {
 
     private void check(String value) {
         if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("사진 주소는 비어있을 수 없습니다.");
+            throw new IllegalArgumentException("사진 주소는 비어 있을 수 없습니다.");
         }
     }
 
