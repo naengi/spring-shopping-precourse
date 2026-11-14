@@ -17,7 +17,7 @@
 - [ ] 이름에 허용되지 않은 특수 문자가 있으면 예외
   - 허용: `( ) [ ] + - & / _`
 - [ ] 이름에 비속어가 있으면 예외 (PurgoMalum API로 검사)
-- [ ] 가격이 비어 있거나 0보다 작으면 예외
+- [ ] 가격이 0보다 이하면 예외
 - [ ] 이미지 URL이 비어 있으면 예외
 
 ### 3. 회원 (Member)
@@ -130,3 +130,6 @@ Controller → Service → Repository → DB
 | 첫 단위 테스트 작성 | DogNameTest 예시로 JUnit5·AssertJ 사용법과 영어 메서드 이름 + `@DisplayName` 방식을 질문 | 예시를 보고 ProductNameTest를 직접 작성하고, 리뷰받은 부분(메서드 이름 오타, 경계값 16자, 허용 특수문자 통과 테스트 추가)을 수정 | 테스트로 서버 없이 규칙을 자동 확인할 수 있다는 것, 예외 테스트는 람다로 감싸야 한다는 것, 경계값(15/16자)과 통과하는 경우도 시험해야 한다는 것을 배움 |
 | Product에 이름 검사 연결 | Dog 예시로 생성자에서 값 객체를 거쳐 저장하는 방법을 질문하고, 서버 연결 오류(`Connection refused`) 원인을 질문 | 생성자와 update 두 곳을 직접 수정하고, 서버를 켠 뒤 잘못된 이름이 막히는지 직접 확인 | 생성자와 수정 메서드 둘 다 검사해야 구멍이 없다는 것과, `Connection refused`는 서버가 꺼져 있다는 뜻임을 배움 |
 | 가격·이미지 URL 검사 | DogAge·DogPhoto 예시로 값 객체 만드는 방법과 한 줄씩 설명을 요청하고, 가격 0 허용 여부를 질문 | ProductPrice, ProductImageUrl을 직접 작성하고 Product에 연결. 검사 메서드 이름을 클래스 이름과 같게 써서 난 오류와, 이름 바꾸기(Shift+F6)로 다른 파일까지 바뀐 문제를 직접 수정 | `int`는 값이 없으면 0이 들어가서 `0 이하`로 막아야 한다는 것, 생성자 이름은 클래스 이름 전용이라는 것, Shift+F6는 사용하는 모든 곳을 바꾼다는 것을 배움 |
+| 비속어 검사 인터페이스 | 외부 API를 바로 호출하지 않고 인터페이스로 나누는 이유를 질문하고, BadWordChecker 예시로 `interface` 문법 설명을 요청 | 예시를 보고 ProfanityChecker를 직접 작성. 처음에 Class로 만든 것을 `interface`로 직접 고침 | 인터페이스는 "할 일 약속"이고, 실제 구현을 진짜/가짜로 바꿔 끼울 수 있어서 테스트가 인터넷에 의존하지 않게 된다는 것을 배움 |
+| PurgoMalum API 호출 | RealBadWordChecker 예시로 `implements`, `@Override`, `@Component`, `RestClient` 설명을 요청 | 예시를 보고 PurgoMalumProfanityChecker를 직접 작성하고, 브라우저로 API 응답(`true`/`false`)을 직접 확인 | `RestClient`로 외부 API를 부르는 흐름(get → uri → retrieve → body)과, `{text}` 자리 표시로 주소를 안전하게 만드는 방법을 배움 |
+| Service에 비속어 검사 연결 | ProductService 수정 정답과 바뀐 부분 설명을 요청하고, 비속어가 통과된 원인을 질문 | 정답을 보고 생성자 주입과 검사 메서드를 직접 반영. 테스트 단어가 PurgoMalum 목록에 없어서 통과된 것을 브라우저로 확인하고 단어를 바꿔 다시 테스트 | 생성자에 인터페이스 타입으로 받으면 Spring이 구현체를 자동으로 넣어 준다는 것, 외부 API 결과는 직접 확인해 봐야 한다는 것을 배움 |
