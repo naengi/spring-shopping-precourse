@@ -13,3 +13,36 @@ GET http://localhost:8080/api/products/1
 
 ### 3. 없는 상품 조회 (99번)
 GET http://localhost:8080/api/products/99
+
+
+### 4. 상품 수정 (1번)
+PUT http://localhost:8080/api/products/1
+Content-Type: application/json
+
+{
+  "name": "따뜻한 라떼",
+  "price": 5000,
+  "imageUrl": "https://example.com/latte.jpg"
+}
+
+### 5. 상품 하나 더 등록 (2번)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "치즈 케이크",
+  "price": 6000,
+  "imageUrl": "https://example.com/cake.jpg"
+}
+
+### 6. 상품 목록 조회
+GET http://localhost:8080/api/products
+
+### 7. 상품 삭제 (1번)
+DELETE http://localhost:8080/api/products/1
+
+### 8. 삭제한 1번 다시 조회
+GET http://localhost:8080/api/products/1
+
+### 9. 삭제 후 목록 조회
+GET http://localhost:8080/api/products
