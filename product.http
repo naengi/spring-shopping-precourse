@@ -46,3 +46,13 @@ GET http://localhost:8080/api/products/1
 
 ### 9. 삭제 후 목록 조회
 GET http://localhost:8080/api/products
+
+### 10. 잘못된 이름으로 등록
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "커피!!!",
+  "price": 4500,
+  "imageUrl": "https://example.com/coffee.jpg"
+}

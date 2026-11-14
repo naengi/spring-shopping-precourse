@@ -19,13 +19,13 @@ public class Product {
     }
 
     public Product(String name, int price, String imageUrl) {
-        this.name = name;
+        this.name = new ProductName(name).getValue();
         this.price = price;
         this.imageUrl = imageUrl;
     }
 
     public void update(String name, int price, String imageUrl) {
-        this.name = name;
+        this.name = new ProductName(name).getValue();
         this.price = price;
         this.imageUrl = imageUrl;
     }
