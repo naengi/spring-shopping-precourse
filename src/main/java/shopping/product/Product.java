@@ -20,14 +20,14 @@ public class Product {
 
     public Product(String name, int price, String imageUrl) {
         this.name = new ProductName(name).getValue();
-        this.price = price;
-        this.imageUrl = imageUrl;
+        this.price = new ProductPrice(price).getValue();
+        this.imageUrl = new ProductImageUrl(imageUrl).getValue();
     }
 
     public void update(String name, int price, String imageUrl) {
         this.name = new ProductName(name).getValue();
-        this.price = price;
-        this.imageUrl = imageUrl;
+        this.price = new ProductPrice(price).getValue();
+        this.imageUrl = new ProductImageUrl(imageUrl).getValue();
     }
 
     public Long getId() {

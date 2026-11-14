@@ -56,3 +56,50 @@ Content-Type: application/json
   "price": 4500,
   "imageUrl": "https://example.com/coffee.jpg"
 }
+
+### 11. 가격 0으로 등록 (실패해야 함)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "공짜 커피",
+  "price": 0,
+  "imageUrl": "https://example.com/coffee.jpg"
+}
+
+### 12. 가격 음수로 등록 (실패해야 함)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "마이너스 커피",
+}
+
+### 13. 이미지 URL 빈 값으로 등록 (실패해야 함)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "그림없는 커피",
+  "price": 4500,
+  "imageUrl": ""
+}
+
+### 14. 이미지 URL 아예 빼고 등록 (실패해야 함)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "그림없는 커피",
+  "price": 4500
+}
+
+### 15. 잘못된 값으로 수정 (실패해야 함)
+PUT http://localhost:8080/api/products/1
+Content-Type: application/json
+
+{
+  "name": "따뜻한 라떼",
+  "price": 0,
+  "imageUrl": "https://example.com/latte.jpg"
+}
