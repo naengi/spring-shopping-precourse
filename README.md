@@ -21,12 +21,12 @@
 - [x] 이미지 URL이 비어 있으면 예외
 
 ### 3. 회원 (Member)
-- [ ] 회원 가입 `POST /api/members/register` → 토큰 발급
-  - [ ] 이메일 형식이 올바르지 않으면 400
-  - [ ] 비밀번호가 비어 있으면 400
-  - [ ] 이미 가입된 이메일이면 409
-- [ ] 로그인 `POST /api/members/login` → 토큰 발급
-  - [ ] 이메일 또는 비밀번호가 일치하지 않으면 401
+- [x] 회원 가입 `POST /api/members/register` → 토큰 발급
+  - [x] 이메일 형식이 올바르지 않으면 400
+  - [x] 비밀번호가 비어 있으면 400
+  - [x] 이미 가입된 이메일이면 409
+- [x] 로그인 `POST /api/members/login` → 토큰 발급
+  - [x] 이메일 또는 비밀번호가 일치하지 않으면 401
 
 ### 4. 인증
 - [ ] 요청 헤더 `Authorization: Bearer {토큰}`으로 회원을 식별
@@ -135,3 +135,6 @@ Controller → Service → Repository → DB
 | Service에 비속어 검사 연결 | ProductService 수정 정답과 바뀐 부분 설명을 요청하고, 비속어가 통과된 원인을 질문 | 정답을 보고 생성자 주입과 검사 메서드를 직접 반영. 테스트 단어가 PurgoMalum 목록에 없어서 통과된 것을 브라우저로 확인하고 단어를 바꿔 다시 테스트 | 생성자에 인터페이스 타입으로 받으면 Spring이 구현체를 자동으로 넣어 준다는 것, 외부 API 결과는 직접 확인해 봐야 한다는 것을 배움 |
 | 공통 예외 처리 (NotFoundException, GlobalExceptionHandler) | NoMemoException·ErrorDesk 예시로 `extends`, `super()`, `record`, `@RestControllerAdvice`, `@ExceptionHandler` 설명을 요청. 뼈대만 받아 채우는 방식은 어려워서 예시를 보고 고치는 방식으로 진행 | 예시를 보고 두 파일을 직접 작성하고, 리뷰받은 부분(`RuntimeException` 오타, 영수증 대신 오류를 담은 `body`, 400 메서드의 매개변수 타입)을 직접 수정. ProductService의 없음 오류 세 곳을 직접 교체 | 오류 종류를 나눠야 상태 코드를 다르게 줄 수 있다는 것, `super(message)`로 넘긴 문장을 `getMessage()`로 꺼낸다는 것, 오류를 한 곳에서 모아 처리하면 컨트롤러가 깔끔해진다는 것을 배움 |
 | 4단계 API 동작 확인 | 서버 재시작부터 `.http` 1~17번 예상 상태 코드까지 순서대로 안내를 요청 | 직접 실행해 500이던 요청이 404·400으로 바뀐 것을 확인 | 삭제한 상품을 수정하면 값 검사보다 "없음"이 먼저 걸려 404가 나온다는 것처럼, 검사 순서에 따라 응답이 달라진다는 것을 배움 (+15번은 주의)|
+| 회원 저장소와 값 검사 (Member, MemberEmail, MemberPassword) | Reader 예시로 `V2` 테이블, Entity, `findByEmail`·`existsByEmail` 이름 규칙, 이메일 정규식 설명을 요청하고 `final`·`static`·상수 이름 규칙을 질문 | 예시를 보고 직접 작성하고, 리뷰받은 부분(`existsMyEmail` 오타, `Optional` import, 한 줄 getter, `public` 검사 메서드)을 직접 수정 | Spring Data는 메서드 이름(`동작+By+칸 이름`)만으로 쿼리를 만든다는 것, `static`은 클래스에 하나만 있고 `final`은 한 번 넣으면 못 바꾼다는 것, 상수는 대문자로 쓴다는 것을 배움 |
+| JWT 발급 (JwtTokenProvider) | jjwt 라이브러리 추가 방법과 TicketMaker 예시로 `@Value`, `Keys.hmacShaKeyFor`, `Jwts.builder()`·`parser()` 설명을 요청 | 예시를 보고 직접 작성하고, 리뷰받은 부분(`@Component` 누락, `SecretKey` 오타, properties 이름 `jwt.expiration` 불일치, `Long`→`long`)을 직접 수정 | 비밀키와 만료 시간을 설정 파일에서 읽어 오는 방법, `@Value` 이름이 틀리면 빨간 줄 없이 서버 실행 때 실패한다는 것, 토큰에 회원 번호와 만료 시간을 담고 서명한다는 것을 배움 |
+| 회원 가입·로그인 API (MemberService, MemberController) | ReaderService 예시를 파이썬 코드와 비교해 한 줄씩 설명해 달라고 요청하고, Controller는 정답을 받아 반영 | 서비스를 직접 작성하고, 리뷰받은 부분(Alt+Enter로 잘못 생긴 클래스, 칸 이름 대문자, 오류 문장 통일, import)을 수정. `member.http`로 201·409·400·200·401을 직접 확인  | 중복 가입은 409, 로그인 실패는 401이고, 이메일이 없을 때와 비밀번호가 틀릴 때 같은 문장을 써야 가입 여부가 드러나지 않는다는 것, 글자 비교는 `equals`를 쓴다는 것을 배움 |
