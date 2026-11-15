@@ -1,6 +1,5 @@
 package shopping.product;
 
-import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import shopping.product.dto.ProductRequest;
 import shopping.product.dto.ProductResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")

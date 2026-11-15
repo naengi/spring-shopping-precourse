@@ -29,18 +29,18 @@
   - [x] 이메일 또는 비밀번호가 일치하지 않으면 401
 
 ### 4. 인증
-- [ ] 요청 헤더 `Authorization: Bearer {토큰}`으로 회원을 식별
-- [ ] 토큰이 없거나 유효하지 않으면 401
-- [ ] 토큰이 만료되었으면 401 추가
+- [x] 요청 헤더 `Authorization: Bearer {토큰}`으로 회원을 식별
+- [x] 토큰이 없거나 유효하지 않으면 401
+- [x] 토큰이 만료되었으면 401 추가
 
 ### 5. 위시 리스트 (Wish) — 로그인한 회원만 사용
-- [ ] 위시 리스트에 상품 추가 `POST /api/wishes`
-  - [ ] 존재하지 않는 상품이면 404
-  - [ ] 이미 담긴 상품이면 409
-- [ ] 위시 리스트 조회 `GET /api/wishes`
-- [ ] 위시 리스트에서 상품 삭제 `DELETE /api/wishes/{wishId}`
-  - [ ] 다른 회원의 위시를 삭제하려 하면 403
-  - [ ] 존재하지 않는 위시면 404
+- [x] 위시 리스트에 상품 추가 `POST /api/wishes`
+  - [x] 존재하지 않는 상품이면 404
+  - [x] 이미 담긴 상품이면 409
+- [x] 위시 리스트 조회 `GET /api/wishes`
+- [x] 위시 리스트에서 상품 삭제 `DELETE /api/wishes/{wishId}`
+  - [x] 다른 회원의 위시를 삭제하려 하면 403
+  - [x] 존재하지 않는 위시면 404
 
 ---
 
@@ -140,3 +140,7 @@ Controller → Service → Repository → DB
 | 회원 가입·로그인 API (MemberService, MemberController) | ReaderService 예시를 파이썬 코드와 비교해 한 줄씩 설명해 달라고 요청하고, Controller는 정답을 받아 반영 | 서비스를 직접 작성하고, 리뷰받은 부분(Alt+Enter로 잘못 생긴 클래스, 칸 이름 대문자, 오류 문장 통일, import)을 수정. `member.http`로 201·409·400·200·401을 직접 확인  | 중복 가입은 409, 로그인 실패는 401이고, 이메일이 없을 때와 비밀번호가 틀릴 때 같은 문장을 써야 가입 여부가 드러나지 않는다는 것, 글자 비교는 `equals`를 쓴다는 것을 배움 |
 | 개념 복습 (계층 구조, 생성자 주입, HTTP 메서드, 타입 검사) | MemberController 정답지와 README 계층 표를 조각별로 다시 설명해 달라고 요청하고, 카페(Bean·Barista·Counter) 예시로 생성자 주입, GET·POST·PUT·DELETE 차이, 컴파일러의 타입 검사를 질문 | 수정 사항 없음 | Spring이 생성자를 보고 필요한 객체를 대신 만들어 넣어 준다는 것, 같은 주소라도 요청 방식에 따라 다른 기능이 된다는 것, 클래스를 만들면 곧 새 타입이 되고 컴파일러가 실행 전에 타입을 검사한다는 것을 배움 |
 | 로그인 회원 식별 (@LoginMember, LoginMemberArgumentResolver, WebConfig) | VisitorResolver 예시로 `try`/`catch`, 직접 만드는 어노테이션(`@Target`, `@Retention`), `HandlerMethodArgumentResolver`, `WebMvcConfigurer` 설명을 요청 | 예시를 보고 직접 작성하고, 리뷰받은 부분(새 메서드를 따로 만든 것, 클래스 이름으로 메서드 호출, `"Bearer"` 뒤 공백 누락, 100자 넘는 줄)을 직접 수정 | 라이브러리 오류를 우리 예외로 바꿔 401로 보내는 방법, 어노테이션은 이름표일 뿐이고 그걸 읽는 코드가 따로 있어야 한다는 것, 따옴표 안 오타는 컴파일러가 못 잡는다는 것을 배움 |
+| 위시 저장소 (V3 SQL, Wish, WishRepository) | Loan 예시로 외래 키(`FOREIGN KEY`, `ON DELETE CASCADE`, `UNIQUE`)와 `@ManyToOne`·`@JoinColumn` 설명을 요청 | 예시를 보고 직접 작성하고, 처음에 토큰을 표에 넣으려 한 SQL과 import 순서를 직접 수정 | 토큰은 DB에 저장하지 않는다는 것, 위시는 회원과 상품을 잇는 표라는 것, `@ManyToOne`으로 다른 Entity를 칸처럼 들고 있을 수 있다는 것을 배움 |
+| 위시 기능 (ForbiddenException, DTO, WishService, WishController) | LoanService·LoanController 예시로 주인 검사, `stream().map().toList()`, `@LoginMember` 사용법 설명을 요청 | 예시를 보고 직접 작성하고, 리뷰받은 부분(요청 칸 이름 `productId`, 전부 401로 쓴 예외 종류, 삭제 때 중복 검사를 부른 것, 필드 타입, `@RequestBody`의 `@` 누락, `{wishId}` 누락, 주소 오타)을 직접 수정 | 401(누군지 모름)과 403(남의 것)의 차이, 컨트롤러는 `@LoginMember` 하나로 로그인 회원을 받는다는 것, 주소·JSON 칸 이름 같은 문자열 오타는 컴파일러가 못 잡는다는 것을 배움 |
+| 6단계 API 동작 확인 | `wish.http` 요청과 예상 결과표를 요청 | 직접 실행해 401·201·409·404·200·403·204가 모두 예상대로 나오는 것을 확인 | `client.global.set`으로 응답 토큰을 저장해 `{{tokenA}}`로 다시 쓰는 방법, 회원 두 명으로 권한(403)을 시험하는 방법을 배움 |
+| 어노테이션 개념 정리 | 자주 쓰는 어노테이션 표와 Spring·어노테이션의 차이를 질문하고, 직접 정리한 표의 검토를 요청 | 정리한 표에서 오타(`@RequestBody` 등)와 `@Repository`·`@Transactional` 설명을 직접 수정 | 어노테이션은 자바 문법(쪽지)이고 Spring은 그걸 읽고 일하는 프레임워크(매니저)라는 것, 어노테이션마다 읽는 주인(자바·Spring·JPA·JUnit·우리 코드)이 다르다는 것을 배움 |
