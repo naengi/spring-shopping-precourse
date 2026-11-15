@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class ProductNameTest {
     @Test
@@ -28,10 +30,11 @@ public class ProductNameTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"쌀국수!", "딸기@", "사과#", "포도$", "귤*", "배%"})
     @DisplayName("허용되지 않은 특수문자를 사용할 경우 예외가 발생한다")
-    void throwsWhenInvalidChar() {
-        assertThatThrownBy(() -> new ProductName("쌀국수!"))
+    void throwsWhenInvalidChar(String name) {
+        assertThatThrownBy(() -> new ProductName(name))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
