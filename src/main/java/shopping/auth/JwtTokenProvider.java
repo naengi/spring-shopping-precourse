@@ -1,5 +1,6 @@
 package shopping.auth;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
@@ -7,6 +8,7 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import shopping.common.UnauthorizedException;
 
 @Component
 public class JwtTokenProvider {
@@ -30,13 +32,17 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public long getMemberId(String jwtToken) {
-        String sub = Jwts.parser()
-                .verifyWith(key)
-                .build()
-                .parseSignedClaims(jwtToken)
-                .getPayload()
-                .getSubject();
-        return Long.valueOf(sub);
+    public long getMemberId(String token) {
+        try {
+            String sub = Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getSubject();
+            return Long.valueOf(sub);
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new UnauthorizedException("유효하지 않은 토큰입니다.");
+        }
     }
 }
