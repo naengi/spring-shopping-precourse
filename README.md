@@ -71,7 +71,7 @@ Controller → Service → Repository → DB
 - 이렇게 하면 검사 규칙이 한곳에 모이고, 스프링 없이 단위 테스트를 할 수 있다.
 - 비속어 검사는 외부 API를 호출해야 하므로 `ProfanityChecker` 인터페이스로 분리한다.
   - 실제 구현: PurgoMalum API 호출
-  - 테스트: 가짜 구현(Fake)으로 대체해 외부 API 없이 테스트
+  - 테스트: 실제 PurgoMalum API를 호출해 비속어 판정과 서비스 동작을 확인한다 (인터넷 연결 필요)
 
 ### 인증 방식 (JWT)
 - 가입·로그인에 성공하면 회원 ID를 담은 JWT를 발급한다.
@@ -145,3 +145,5 @@ Controller → Service → Repository → DB
 | 6단계 API 동작 확인 | `wish.http` 요청과 예상 결과표를 요청 | 직접 실행해 401·201·409·404·200·403·204가 모두 예상대로 나오는 것을 확인 | `client.global.set`으로 응답 토큰을 저장해 `{{tokenA}}`로 다시 쓰는 방법, 회원 두 명으로 권한(403)을 시험하는 방법을 배움 |
 | 어노테이션 개념 정리 | 자주 쓰는 어노테이션 표와 Spring·어노테이션의 차이를 질문하고, 직접 정리한 표의 검토를 요청 | 정리한 표에서 오타(`@RequestBody` 등)와 `@Repository`·`@Transactional` 설명을 직접 수정 | 어노테이션은 자바 문법(쪽지)이고 Spring은 그걸 읽고 일하는 프레임워크(매니저)라는 것, 어노테이션마다 읽는 주인(자바·Spring·JPA·JUnit·우리 코드)이 다르다는 것을 배움 |
 | 값 객체 단위 테스트 (ProductPrice, ProductImageUrl, MemberEmail) | DogAge·DogPhoto·ReaderEmail 테스트 예시와 경계값, `null` 검사 설명을 요청하고, MemberEmailTest는 정답을 받아 반영 | 예시를 보고 직접 작성하고, 리뷰받은 부분(자동완성으로 잘못 고른 `IllegalAccessError`, 빠진 `;`, 다른 패키지에 둔 테스트 파일, import 순서)을 직접 수정한 뒤 `gradlew clean test`로 통과 확인 | 경계값(1원과 0원)을 꼭 시험해야 한다는 것, 테스트는 원래 코드와 같은 패키지에 둬야 한다는 것, 비슷한 이름의 자동완성은 끝까지 확인해야 한다는 것을 배움 |
+| 기능 테스트 (JWT, 서비스, API) | 과제 문서와 README 테스트 전략을 대조해 빠진 테스트를 점검해 달라고 요청하고, 테스트 코드는 정답을 받아 개념과 한 줄씩 설명을 요청 | 테스트 파일을 직접 만들어 넣고, 비속어 검사는 가짜 대신 실제 PurgoMalum API를 쓰기로 직접 결정해 README 테스트 전략을 함께 수정 | 만료 시간을 음수로 줘서 만료 토큰을 시험하는 방법, `@SpringBootTest`와 `@Transactional`로 테스트마다 DB를 되돌리는 것, MockMvc로 서버를 켜지 않고 상태 코드와 JSON을 확인하는 방법을 배움 |
+| 여러 값 테스트 (@ParameterizedTest) | 값마다 테스트를 따로 만들지 않는 방법을 질문 | ProductNameTest 특수문자 테스트를 바꾸고 MemberPasswordTest를 추가 | `@ValueSource`, `@NullAndEmptySource`로 메서드 하나에 값 여러 개를 넣어 반복 시험하는 방법을 배움 |
