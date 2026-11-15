@@ -118,7 +118,7 @@ Controller → Service → Repository → DB
 
 | 활용한 부분 | 활용 방식 | 직접 수정한 내용 | 배운 점 |
 |---|---|---|---|
-| README 기능 목록 초안 | 과제 요구 사항을 주고 초안 작성을 요청 | 올바르지 않은 형식과 잘못된 계획 부분 수정 | 사이트에 대해 무지한 부분이 많은데 초안 작성한 글을 보고 대략적으로 쇼핑 사이트가 돌아가는 형식을 배움 |
+| README 기능 목록 초안 | 과제 요구 사항을 주고 초안 작성을 요청 | 올바르지 않은 형식과 잘못된 계획 부분 수정 | 자바와 백엔드에 대해 무지한 부분이 많은데 초안 작성한 글을 보고 대략적으로 쇼핑 사이트가 돌아가는 형식을 배움 |
 | 토큰 방식 선택 | JWT와 랜덤 토큰의 차이 설명을 요청 | 수정 사항 없음 | JWT의 개념과 랜덤 토큰 차이점 배움 |
 | 1단계 계층 구조 이해 | Controller·Service·Repository·Entity·DTO의 역할 설명을 요청하고, 과제와 무관한 예시(Book, Dog 등) 코드를 받아 참고 | 예시를 보고 Product 관련 6개 파일을 직접 작성하고, 작성한 코드가 올바른지 체크 후 올바르지 않은 부분 수정 | 요청이 Controller → Service → Repository 순서로 흐른다는 것과 DTO를 따로 두는 이유를 배움 |
 | product 테이블 SQL 작성 | 다른 예시(Dog)로 `CREATE TABLE` 형식을 배운 뒤, Product용 SQL 정답을 받아 직접 타이핑하고 서버를 재시작해 마이그레이션 적용을 확인 | 예시를 보고 직접 코드 작성 이후, 이해되지 않은 부분은 정답지를 받아 타이핑| SQL 자료형과 자바 타입의 대응, 자바 `imageUrl`이 DB에서 `image_url`로 바뀌는 이유를 배움 |
@@ -144,3 +144,4 @@ Controller → Service → Repository → DB
 | 위시 기능 (ForbiddenException, DTO, WishService, WishController) | LoanService·LoanController 예시로 주인 검사, `stream().map().toList()`, `@LoginMember` 사용법 설명을 요청 | 예시를 보고 직접 작성하고, 리뷰받은 부분(요청 칸 이름 `productId`, 전부 401로 쓴 예외 종류, 삭제 때 중복 검사를 부른 것, 필드 타입, `@RequestBody`의 `@` 누락, `{wishId}` 누락, 주소 오타)을 직접 수정 | 401(누군지 모름)과 403(남의 것)의 차이, 컨트롤러는 `@LoginMember` 하나로 로그인 회원을 받는다는 것, 주소·JSON 칸 이름 같은 문자열 오타는 컴파일러가 못 잡는다는 것을 배움 |
 | 6단계 API 동작 확인 | `wish.http` 요청과 예상 결과표를 요청 | 직접 실행해 401·201·409·404·200·403·204가 모두 예상대로 나오는 것을 확인 | `client.global.set`으로 응답 토큰을 저장해 `{{tokenA}}`로 다시 쓰는 방법, 회원 두 명으로 권한(403)을 시험하는 방법을 배움 |
 | 어노테이션 개념 정리 | 자주 쓰는 어노테이션 표와 Spring·어노테이션의 차이를 질문하고, 직접 정리한 표의 검토를 요청 | 정리한 표에서 오타(`@RequestBody` 등)와 `@Repository`·`@Transactional` 설명을 직접 수정 | 어노테이션은 자바 문법(쪽지)이고 Spring은 그걸 읽고 일하는 프레임워크(매니저)라는 것, 어노테이션마다 읽는 주인(자바·Spring·JPA·JUnit·우리 코드)이 다르다는 것을 배움 |
+| 값 객체 단위 테스트 (ProductPrice, ProductImageUrl, MemberEmail) | DogAge·DogPhoto·ReaderEmail 테스트 예시와 경계값, `null` 검사 설명을 요청하고, MemberEmailTest는 정답을 받아 반영 | 예시를 보고 직접 작성하고, 리뷰받은 부분(자동완성으로 잘못 고른 `IllegalAccessError`, 빠진 `;`, 다른 패키지에 둔 테스트 파일, import 순서)을 직접 수정한 뒤 `gradlew clean test`로 통과 확인 | 경계값(1원과 0원)을 꼭 시험해야 한다는 것, 테스트는 원래 코드와 같은 패키지에 둬야 한다는 것, 비슷한 이름의 자동완성은 끝까지 확인해야 한다는 것을 배움 |
