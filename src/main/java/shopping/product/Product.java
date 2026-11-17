@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity
+@Entity     //DB 표 한 줄과 짝임을 명시
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
